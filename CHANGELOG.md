@@ -1,9 +1,17 @@
+## 3.1.6
+
+- feat(android): add support for Flutter 3.47+ and AGP 9.0+ built-in Kotlin (`android.builtInKotlin=true`).
+- fix(android): conditionally apply `kotlin-android` plugin to prevent extension collision in built-in Kotlin environments while preserving backward compatibility.
+- fix(android): remove deprecated `kotlinOptions` DSL block and legacy `kotlin-stdlib-jdk8` dependency.
+- chore: update minimum Flutter SDK constraint to `>=3.44.0`.
+
 ## 3.1.5 (hm-toan fork)
 
 - fix(android): remove hardcoded `io.flutter:flutter_embedding_debug` with stale
   engine hash — Flutter tool auto-injects the correct embedding variant via
   `flutter.gradle`. Hardcoding it broke `releaseCompileClasspath` resolution
   on current Flutter SDKs.
+
 
 ## 3.1.4
 

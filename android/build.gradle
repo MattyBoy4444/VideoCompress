@@ -22,7 +22,19 @@ rootProject.allprojects {
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+
+def isBuiltInKotlin() {
+    try {
+        def agpMajor = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')[0] as int
+        return agpMajor >= 9 && project.findProperty('android.builtInKotlin')?.toString() != 'false'
+    } catch (Throwable ignored) {
+        return project.findProperty('android.builtInKotlin')?.toString() == 'true'
+    }
+}
+
+if (!isBuiltInKotlin()) {
+    project.pluginManager.apply('org.jetbrains.kotlin.android')
+}
 
 android {
     namespace 'com.example.video_compress'
@@ -31,9 +43,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = '17'
     }
 
     sourceSets {
@@ -49,6 +58,6 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.otaliastudios:transcoder:0.11.2'
 }
+
